@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.konrad.app.AddDuty">
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/nameOfDuty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textColorHint="@color/colorAccent"
+        android:layout_marginTop="20dp"
+        >
+
+        <EditText
+            android:id="@+id/nameOfDutyEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/enter_new_duty"
+            android:textColor="@color/colorAccent"
+            android:inputType="text" />`
+
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/idDuty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textColorHint="@color/colorAccent"
+        android:layout_marginTop="100dp"
+        android:layout_below="@+id/nameOfDuty"
+        >
+
+        <EditText
+            android:id="@+id/nameOfidDuty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/enter_identificator"
+            android:textColor="@color/colorAccent"
+            android:inputType="text" />`
+
+    </android.support.design.widget.TextInputLayout>
+
+
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/idDuty"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/layoutsMargin"
+        android:text="Add Duty"
+        android:id="@+id/addBtn"/>
+
+
+
+
+
+</RelativeLayout>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="upperMarginForBinImageBtn">15dp</dimen>
+    <dimen name="lowerMarginForBinImageBtn">15dp</dimen>
+    <dimen name="rightMarginForBinImageBtn">30dp</dimen>
+    <dimen name="upperMarginForBinDutyLabel">25dp</dimen>
+    <dimen name="leftMarginForBinDutyLabel">20dp</dimen>
+    <dimen name="layoutsMargin">55dp</dimen>
+</resources>

@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">App</string>
+    <string name="AdditionalInfoAlert">The List Is Empty!</string>
+    <string name="Okey">OK</string>
+    <string name="Deny">Cancel</string>
+    <string name="enter_name_of_duty">Enter Name Of Product</string>
+    <string name="NewProductAddingNow">You Are Going To Add A New Duty Right Now</string>
+    <string name="enter_identificator">Enter An Identificator Of Duty</string>
+    <string name="enter_new_duty">Enter Name Of Duty</string>
+    <string name="would_like_to_add">Would You Like To Add A New Duty?</string>
+
+
+</resources>

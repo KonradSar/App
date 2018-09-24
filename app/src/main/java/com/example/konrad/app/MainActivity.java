@@ -3,6 +3,7 @@ package com.example.konrad.app;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
@@ -38,6 +39,9 @@ import static com.example.konrad.app.GlobalListsAndVariablesForApp.removedElemen
 public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     TextView dutyLabel;
+
+    // Nazwa pliku zapisywana w ExternalMEmory jako lista DutyList tworzona w aplikacji
+
     final static String NAZWA_PLIKU = "DutyList.ks";
     MediaPlayer mySeventhSound;
     private Context context1;
@@ -46,13 +50,16 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton fab;
     private static MediaPlayer mySound;
     RecyclerViewAdapter recyclerViewAdapter;
+    static String NUMBEROFVIEWS = "NUMBEROFVIEWS";
 
-
+    // Metoda uruchomienia nowego activity za pomoca intenta
 
     private void GoToNewActivity() {
         Intent intent = new Intent(MainActivity.this, AddDuty.class);
         startActivity(intent);
     }
+
+    // Ponizej metoda obslugujaca wyjscie z aplikacji do Android
 
     public void onBackPressed() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
@@ -75,6 +82,37 @@ public class MainActivity extends AppCompatActivity {
         alertDialog.create();
         alertDialog.show();
         return;
+    }
+
+
+    // Ponizej w dwoch metodach obsluga obrotu ekranu gdzie jako parametr przekazuje liste typu Integer z wartosciami odpowiadajacymi ilosci odslon kazdego elementu listy DutyList
+    // Indeks kazdego elementu listy to jednoczesnie indeksy kolejnych pozycji na liscie DutyList
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState){
+        super.onSaveInstanceState(outState);
+
+        // Laduje do listy ilosci odslon dla kazdego Duty z osobna i zapisuje jako Klucz, Wartosc w outState i przekazuje dalej do onRestore
+
+        ArrayList<Integer> list = new ArrayList<>();
+        for(int i = 0; i < GlobalListsAndVariablesForApp.globalDutiesList.size(); i++){
+            list.add(i, GlobalListsAndVariablesForApp.globalDutiesList.get(i).getNumberOfViews());
+        }
+        outState.putIntegerArrayList(NUMBEROFVIEWS, list);
+    }
+    @Override
+
+    // Pobieram zapisana liste z o rozmiarze listy obowiazkow i przypisuje wartosci int do starej listy w generalmethods z ktorej
+    // adapter poniera dane do wyswietlenia
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        // Ponizej przypisuje do Listy typu Integer zapisana powyzej liste integerow. Iterujac po elementach listy z kazdego z nich wyciagam wartosc int i przypisuje do
+        // odpowiednio takiego samego indeksu w liscie DutyList i ustawiam setterem wartosc ilosci odslon przekazana w liscie przenosnej stworzonej w linijce 97-99
+
+        GlobalListsAndVariablesForApp.numberOfViewsFromOnSavedInstanceState = savedInstanceState.getIntegerArrayList(NUMBEROFVIEWS);
+        for(int i = 0; i < GlobalListsAndVariablesForApp.numberOfViewsFromOnSavedInstanceState.size(); i++){
+            GlobalListsAndVariablesForApp.globalDutiesList.get(i).setNumberOfViews(GlobalListsAndVariablesForApp.numberOfViewsFromOnSavedInstanceState.get(i));
+        }
     }
 
     @Override
@@ -105,6 +143,9 @@ public class MainActivity extends AppCompatActivity {
         } else {
             mySeventhSound.start();
             Toast.makeText(getApplicationContext(), "No Data Saved In Memory", Toast.LENGTH_SHORT).show();
+
+            // Alert dialog informujacy o braku elementow na liscie ponizej
+
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
             alertDialog.setTitle(R.string.AdditionalInfoAlert);
             alertDialog.setMessage(R.string.would_like_to_add);
@@ -128,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
             alertDialog.show();
 
         }
-
+        // On Click dla FAB, ktory dodaje kolejne elementy do listy
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -139,6 +180,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    // Ponizej metody zapisujace i odczytujace dane z ExternalMemory w formacie JSON i konwertujace je do wyswietlenia w postaci listy typu NewDuty
+
     public List<NewDuty> readFromExternalMemory() {
         File plik = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), NAZWA_PLIKU);
         StringBuilder sb = new StringBuilder();
@@ -170,7 +213,23 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void SaveToExternalMEmory(NewDuty duty) {
+        if (czyPlikIstnieje() == false){
 
+            List<NewDuty> myList1 = new ArrayList<>();
+            myList1.add(duty);
+            zapiszDoPamieci(myList1);
+
+        }
+        else{
+            List<NewDuty> myList1 = readFromExternalMemory();
+
+
+            myList1.get(GlobalListsAndVariablesForApp.position).setNumberOfViews(GlobalListsAndVariablesForApp.numberOfViewsForSelectedDuty);
+            zapiszDoPamieci(myList1);
+
+        }
+    }
     public boolean czyPlikIstnieje(){
         File plik = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), NAZWA_PLIKU);
         boolean zwrotka = false;
@@ -241,9 +300,4 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(recyclerViewAdapter);
 
     }
-
-
-
-
-
 }

@@ -19,7 +19,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".AddDuty" />
-        <activity android:name=".MoreDetailsAboutSelectedDuty"></activity>
     </application>
 
 </manifest>

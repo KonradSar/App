@@ -10,12 +10,17 @@ import java.text.DateFormat;
  */
 
 public class NewDuty {
+
+    // Pola opisujace kazdy nowy obiekt typu NewDuty
+
     public String labelName;
     public int numberOfDuty;
     public String dateOfAddingDuty;
     public int numberOfViews;
     public String randomColor;
     public String idDuty;
+
+    // Ponizej przeciazamy konstrutkor dwukrotnie w celu zapewnienia swobodnego tworzenia nowego obiektu na dwa sposoby
 
     public NewDuty(String labelName, int numberOfDuty, String dateOfAddingDuty, int numberOfViews, String randomColor, String idDuty) {
         this.labelName = labelName;
@@ -30,6 +35,8 @@ public class NewDuty {
         this.labelName = labelName;
         this.numberOfDuty = numberOfDuty;
     }
+
+    // Ponizej oczywiscie gettery i settery
 
     public String getLabelName() {
         return labelName;

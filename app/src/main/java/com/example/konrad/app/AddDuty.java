@@ -48,6 +48,8 @@ public class AddDuty extends AppCompatActivity {
     EditText idDuty;
     NewDuty dutyOne;
 
+    // Metoda losujaca wybrany kolor z Listy Stringow
+
     public static String selectColorRandomly(){
 
         List<String> colors = new ArrayList<>();
@@ -60,13 +62,15 @@ public class AddDuty extends AppCompatActivity {
         return colors.get(rand.nextInt(colors.size()));
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    public static SimpleDateFormat getCurrentDate() {
-        String dataFormat = "dd-MM-yyyy";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dataFormat, Locale.GERMAN);
-        return simpleDateFormat;
+//    @RequiresApi(api = Build.VERSION_CODES.N)
+//    public static SimpleDateFormat getCurrentDate() {
+//        String dataFormat = "dd-MM-yyyy";
+//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dataFormat, Locale.GERMAN);
+//        return simpleDateFormat;
+//
+//    }
 
-    }
+    // Ponizej metoda pobierajaca date w formacie String o odpowiednim ukladzie D/M/Y
     @RequiresApi(api = Build.VERSION_CODES.N)
     public static String getDateInStringFormat(){
         DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
@@ -84,11 +88,13 @@ public class AddDuty extends AppCompatActivity {
         nameOfDuty = (EditText) findViewById(R.id.nameOfDutyEditText);
         idDuty = (EditText) findViewById(R.id.nameOfidDuty);
 
+        // Ponizej OnClick dla buttona dodającego nowe Duty do listy
 
         addBtn.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
+                // Zabezpieczenie na wypadek braku wypelnienia wszystkich pol przy formularzu dodawania nowego Duty
                 if (!nameOfDuty.getText().toString().equals("") && !idDuty.getText().toString().equals("")){
                     String customColor = selectColorRandomly();
                     String currentDate = getDateInStringFormat();
@@ -105,6 +111,7 @@ public class AddDuty extends AppCompatActivity {
             }
         });
     }
+    // Zapytania o dostep dla aplikacji
     final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 1;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -173,6 +180,7 @@ public class AddDuty extends AppCompatActivity {
             // za pomoca swticha mozna przejrzec czasmi wiele prosb
         }
     }
+    // Ponizej metody zapisywania i odczytywania danych z pamieci External Memory na potrzeby aplikcaji
     public List<NewDuty> readFromExternalMemory(){
         File plik = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), NAZWA_PLIKU);
         StringBuilder sb = new StringBuilder();

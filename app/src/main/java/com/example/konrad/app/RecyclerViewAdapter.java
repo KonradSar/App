@@ -351,7 +351,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 // Odwolanie do metody z klasy main z poziomu adaptera WOW!!! Wcześniej takiego sposobu nie wykorzystano u mnie!!!!
                 notifyDataSetChanged();
                 if(context1 instanceof MainActivity){
-                    ((MainActivity)context1).checkIfDeletingElementWasClickedInRecyclerView();
+                    // Po usunieciu elementu z listy zapisujemy ja do ExternalMemory pobierajac ja w kolejnej metodzie 
+                    ((MainActivity)context1).updateAndSaveDutiesListToExternalMemory();
                 }
             }
         });

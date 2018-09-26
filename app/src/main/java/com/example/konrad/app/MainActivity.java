@@ -238,12 +238,10 @@ public class MainActivity extends AppCompatActivity {
         }
         return zwrotka;
     }
-    public void removeFromExternalMemoryAndUpdate() {
+    public void updateAndSaveDutiesListToExternalMemory() {
         if (czyPlikIstnieje()){
-            List<NewDuty> myList1 = readFromExternalMemory();
-            myList1.remove(removedElementPosition);
+            List<NewDuty> myList1 = GlobalListsAndVariablesForApp.globalDutiesList;
             zapiszDoPamieci(myList1);
-            String bb = "fw";
         }
     }
 
@@ -269,31 +267,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void checkIfDeletingElementWasClickedInRecyclerView(){
-        Thread thread = new Thread() {
-            @Override
-            public void run() {
-                try {
-                    while(deletingCondition) {
-                        sleep(10);
-                        runOnUiThread(new Runnable() {
-
-                            @Override
-                            public void run() {
-                                removeFromExternalMemoryAndUpdate();
-                                deletingCondition = false;
-                            }
-                        });
-
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-
-        thread.start();
-    }
     public void adjustDataForAdapter() {
         GlobalListsAndVariablesForApp.globalDutiesList = readFromExternalMemory();
         recyclerViewAdapter = new RecyclerViewAdapter(globalDutiesList, MainActivity.this);
